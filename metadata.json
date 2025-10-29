@@ -1,0 +1,5 @@
+{
+  "name": "AI Profile Photo Generator",
+  "description": "An AI-powered application to generate professional, casual, or creative profile photos from an uploaded image. Features a dark, 3-panel layout for a seamless user experience.",
+  "requestFramePermissions": []
+}

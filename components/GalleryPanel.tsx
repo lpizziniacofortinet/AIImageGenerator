@@ -1,0 +1,64 @@
+
+import React from 'react';
+import { ImageIcon, WarningIcon } from './IconComponents';
+
+interface GalleryPanelProps {
+  images: string[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+const ImagePlaceholder: React.FC = () => (
+  <div className="aspect-square bg-gray-700/50 rounded-lg flex items-center justify-center">
+    <ImageIcon className="w-16 h-16 text-gray-600" />
+  </div>
+);
+
+const LoadingSpinner: React.FC = () => (
+  <div className="aspect-square bg-gray-700/50 rounded-lg flex items-center justify-center animate-pulse">
+    <div className="w-12 h-12 border-4 border-t-indigo-400 border-gray-600 rounded-full animate-spin"></div>
+  </div>
+);
+
+export const GalleryPanel: React.FC<GalleryPanelProps> = ({ images, isLoading, error }) => {
+  const renderContent = () => {
+    if (isLoading) {
+      return Array.from({ length: 4 }).map((_, index) => <LoadingSpinner key={index} />);
+    }
+    
+    if (error) {
+      return (
+        <div className="col-span-2 bg-red-900/20 border border-red-500/30 rounded-lg p-6 flex flex-col items-center justify-center text-center">
+           <WarningIcon className="w-12 h-12 text-red-400 mb-4" />
+           <h3 className="text-lg font-semibold text-red-300">Generation Failed</h3>
+           <p className="text-red-400 mt-2">{error}</p>
+        </div>
+      );
+    }
+    
+    if (images.length > 0) {
+      return images.map((src, index) => (
+        <div key={index} className="aspect-square rounded-lg overflow-hidden group relative shadow-lg">
+          <img src={src} alt={`Generated image ${index + 1}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+           <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <a href={src} download={`profile_photo_${index + 1}.png`} className="bg-white text-gray-900 px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transition-colors">
+                Download
+              </a>
+           </div>
+        </div>
+      ));
+    }
+
+    // Default placeholder state
+    return Array.from({ length: 4 }).map((_, index) => <ImagePlaceholder key={index} />);
+  };
+
+  return (
+    <div className="bg-gray-800 rounded-lg p-6 h-full flex flex-col shadow-lg">
+      <h2 className="text-lg font-semibold text-white mb-4">Generated Images</h2>
+      <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {renderContent()}
+      </div>
+    </div>
+  );
+};
