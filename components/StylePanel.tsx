@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Style } from '../types';
 import { SparklesIcon } from './IconComponents';
@@ -66,6 +65,13 @@ export const StylePanel: React.FC<StylePanelProps> = ({
             onClick={onStyleSelect}
             label="Beach"
             description="Relaxed on a Ligurian beach at sunset."
+          />
+          <StyleButton
+            style={Style.ANIME}
+            isSelected={selectedStyle === Style.ANIME}
+            onClick={onStyleSelect}
+            label="Anime"
+            description="Dark fantasy art in Kentaro Miura's style."
           />
         </div>
       </div>

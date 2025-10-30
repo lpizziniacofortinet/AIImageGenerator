@@ -19,6 +19,8 @@ const generatePrompt = (style: Style, aspectRatio: AspectRatio): string => {
             return `Generate a casual, friendly-looking profile picture. The person should be in a relaxed, natural setting like a cafe, a park, or against an interesting textured wall. They should have a warm, approachable expression. The style should feel authentic and not overly staged. Maintain the person's key facial features from the provided image. ${aspectPrompt}`;
         case Style.BEACH:
             return `Generate a photo of the person relaxing on a beach wearing beach attire. The setting is a beautiful Ligurian beach during a stunning sunset. The mood should be relaxed and serene. Maintain the person's key facial features from the provided image. ${aspectPrompt}`;
+        case Style.ANIME:
+            return `Generate an anime-style portrait in the iconic, gritty, and detailed art style of Kentaro Miura (famous for Berserk). The image should have high contrast, intricate cross-hatching, and a dark fantasy atmosphere. Maintain the person's key facial features from the provided image. ${aspectPrompt}`;
         default:
             throw new Error('Invalid style selected.');
     }
