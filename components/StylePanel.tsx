@@ -6,8 +6,6 @@ import { SparklesIcon } from './IconComponents';
 interface StylePanelProps {
   selectedStyle: Style | null;
   onStyleSelect: (style: Style) => void;
-  quote: string;
-  onQuoteChange: (quote: string) => void;
   onGenerate: () => void;
   isGenerateDisabled: boolean;
   isLoading: boolean;
@@ -39,8 +37,6 @@ const StyleButton: React.FC<{
 export const StylePanel: React.FC<StylePanelProps> = ({
   selectedStyle,
   onStyleSelect,
-  quote,
-  onQuoteChange,
   onGenerate,
   isGenerateDisabled,
   isLoading
@@ -65,27 +61,13 @@ export const StylePanel: React.FC<StylePanelProps> = ({
             description="Friendly, relaxed photos for social media."
           />
           <StyleButton
-            style={Style.QUOTE}
-            isSelected={selectedStyle === Style.QUOTE}
+            style={Style.BEACH}
+            isSelected={selectedStyle === Style.BEACH}
             onClick={onStyleSelect}
-            label="Quote"
-            description="Inspirational image with custom text."
+            label="Beach"
+            description="Relaxed on a Ligurian beach at sunset."
           />
         </div>
-
-        {selectedStyle === Style.QUOTE && (
-          <div className="mt-4">
-            <label htmlFor="quote" className="block text-sm font-medium text-gray-300 mb-2">Your Quote</label>
-            <textarea
-              id="quote"
-              value={quote}
-              onChange={(e) => onQuoteChange(e.target.value)}
-              placeholder="e.g., The journey of a thousand miles begins with a single step."
-              className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-              rows={3}
-            />
-          </div>
-        )}
       </div>
 
       <div className="mt-6">

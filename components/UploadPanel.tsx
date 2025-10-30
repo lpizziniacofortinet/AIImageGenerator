@@ -1,14 +1,14 @@
-
 import React, { useRef } from 'react';
-import { UploadIcon, EditIcon } from './IconComponents';
+import { UploadIcon, EditIcon, TrashIcon } from './IconComponents';
 
 interface UploadPanelProps {
   onImageUpload: (imageDataUrl: string) => void;
   image: string | null;
   onEditCrop: () => void;
+  onReset: () => void;
 }
 
-export const UploadPanel: React.FC<UploadPanelProps> = ({ onImageUpload, image, onEditCrop }) => {
+export const UploadPanel: React.FC<UploadPanelProps> = ({ onImageUpload, image, onEditCrop, onReset }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,14 +38,23 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({ onImageUpload, image, 
           accept="image/*"
         />
         {image ? (
-          <div className="w-full aspect-square rounded-lg overflow-hidden relative group">
-            <img src={image} alt="Uploaded preview" className="w-full h-full object-cover"/>
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-               <button onClick={onEditCrop} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
-                  <EditIcon className="w-5 h-5" />
-                  Edit Crop
-               </button>
+          <div className="w-full flex flex-col">
+            <div className="w-full aspect-square rounded-lg overflow-hidden relative group">
+              <img src={image} alt="Uploaded preview" className="w-full h-full object-cover"/>
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                 <button onClick={onEditCrop} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+                    <EditIcon className="w-5 h-5" />
+                    Edit Crop
+                 </button>
+              </div>
             </div>
+             <button 
+                onClick={onReset} 
+                className="w-full mt-4 flex items-center justify-center gap-2 bg-gray-600/50 text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-700/50 transition-colors text-sm border border-gray-600"
+              >
+                <TrashIcon className="w-4 h-4" />
+                Upload New Photo
+              </button>
           </div>
         ) : (
           <div
@@ -58,7 +67,6 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({ onImageUpload, image, 
           </div>
         )}
       </div>
-      {image && <p className="text-xs text-gray-400 mt-4 text-center">Your photo is ready. Choose a style and generate!</p>}
     </div>
   );
 };

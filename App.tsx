@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { UploadPanel } from './components/UploadPanel';
 import { GalleryPanel } from './components/GalleryPanel';
@@ -12,7 +11,6 @@ const App: React.FC = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [selectedStyle, setSelectedStyle] = useState<Style | null>(null);
-  const [quote, setQuote] = useState<string>('');
   const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,8 +39,7 @@ const App: React.FC = () => {
       const images = await generateProfilePictures(
         croppedImage,
         selectedStyle,
-        aspectRatio,
-        selectedStyle === Style.QUOTE ? quote : undefined
+        aspectRatio
       );
       setGeneratedImages(images);
     } catch (err) {
@@ -55,12 +52,22 @@ const App: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  const handleReset = () => {
+    setUploadedImage(null);
+    setCroppedImage(null);
+    setSelectedStyle(null);
+    setGeneratedImages([]);
+    setIsLoading(false);
+    setError(null);
+    setIsCropperOpen(false);
+    setAspectRatio('1:1');
+  };
   
   const isGenerateDisabled = useMemo(() => {
     if (isLoading || !croppedImage || !selectedStyle) return true;
-    if (selectedStyle === Style.QUOTE && !quote.trim()) return true;
     return false;
-  }, [isLoading, croppedImage, selectedStyle, quote]);
+  }, [isLoading, croppedImage, selectedStyle]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col">
@@ -71,6 +78,7 @@ const App: React.FC = () => {
             onImageUpload={handleImageUpload}
             image={croppedImage}
             onEditCrop={() => setIsCropperOpen(true)}
+            onReset={handleReset}
           />
         </div>
         <div className="w-full md:w-1/2 lg:w-3/5 flex-grow">
@@ -84,8 +92,6 @@ const App: React.FC = () => {
           <StylePanel
             selectedStyle={selectedStyle}
             onStyleSelect={setSelectedStyle}
-            quote={quote}
-            onQuoteChange={setQuote}
             onGenerate={handleGenerate}
             isGenerateDisabled={isGenerateDisabled}
             isLoading={isLoading}
