@@ -29,3 +29,11 @@ Should one require guidance, a simple operational procedure is as follows:
 6.  **Begin Anew:** Should you wish to restart this delightful process, a 'Reset' button is provided for your convenience.
 
 Go forth and elevate your digital presence. No longer shall you be constrained by the mundanity of mere photography.
+
+## Run Locally
+
+Prerequisites: Node.js
+
+Install dependencies: npm install
+Set the GEMINI_API_KEY in .env.local to your Gemini API key
+Run the app: npm run dev
